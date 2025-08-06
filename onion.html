@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Peter’s Modular Glyph Playground</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <!-- Optional: preload a font or glyph asset here -->
+  <script>
+    const SUPABASE_URL = "https://hcygdemtjwjsdtazeinv.supabase.co";
+    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhjeWdkZW10andqc2R0YXplaW52Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQ0MzEzNzEsImV4cCI6MjA3MDAwNzM3MX0.xOocMI9cQ5i2yCYzBZRwezNHDqmRnKLA2mwkBO1L9U8";
+
+    const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    console.log("supabase initialized");
+  </script>
+  <script>
+    $(document).ready(function () {
+      const hashValue = window.location.hash.substring(1); // Remove the '#' symbol
+      console.log("Hash value:", hashValue);
+      console.log("before ajax call to supabase");
+      $.ajax({
+        url: "https://hcygdemtjwjsdtazeinv.supabase.co/functions/v1/smooth-task",
+        method: "POST",
+        headers: {
+          "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhjeWdkZW10andqc2R0YXplaW52Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQ0MzEzNzEsImV4cCI6MjA3MDAwNzM3MX0.xOocMI9cQ5i2yCYzBZRwezNHDqmRnKLA2mwkBO1L9U8",
+          "Content-Type": "application/json"
+        },
+        data: JSON.stringify({ name: "Peter" }),
+        success: function(data) {
+          console.log("Function response w/postmessage:", data);
+          const jsonString = JSON.stringify(data);
+          $("#json-output").html(`{${jsonString.slice(1, -1)}}`);
+          window.parent.postMessage(jsonString, "*");
+        },
+        error: function(xhr, status, error) {
+          console.error("Function error:", error);
+        }
+      });
+    });
+  </script>
+</head>
+<body>
+  <div id='json-output'>
+  </div>
+</body>
+</html>

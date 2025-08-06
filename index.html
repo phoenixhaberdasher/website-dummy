@@ -9,6 +9,12 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <!-- Optional: preload a font or glyph asset here -->
   <script>
+    const SUPABASE_URL = "https://hcygdemtjwjsdtazeinv.supabase.co";
+    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhjeWdkZW10andqc2R0YXplaW52Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTQ0MzEzNzEsImV4cCI6MjA3MDAwNzM3MX0.xOocMI9cQ5i2yCYzBZRwezNHDqmRnKLA2mwkBO1L9U8";
+
+    const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  </script>
+  <script>
     $(document).ready(function () {
       const hashValue = window.location.hash.substring(1); // Remove the '#' symbol
       console.log("Hash value:", hashValue);

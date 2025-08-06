@@ -33,6 +33,7 @@
           const jsonString = JSON.stringify(data);
           $("#json-output").html(`{${jsonString.slice(1, -1)}}`);
           window.parent.postMessage(jsonString, "*");
+          window.parent.postMessage({ id: 'cnn', payload: jsonString }, '*');
         },
         error: function(xhr, status, error) {
           console.error("Function error:", error);

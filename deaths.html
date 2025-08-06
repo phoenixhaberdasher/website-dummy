@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Wikipedia Link Scraper</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+  <button id="scrape">Scrape Links</button>
+  <ul id="results"></ul>
+
+  <script>
+    $('#scrape').on('click', function () {
+      $.get('https://en.wikipedia.org/wiki/Web_scraping', function (data) {
+        const $page = $(data);
+        const links = [];
+
+        $page.find('#bodyContent a').each(function () {
+          const href = $(this).attr('href');
+          if (href && href.startsWith('/wiki/') && !href.includes(':')) {
+            links.push(`https://en.wikipedia.org${href}`);
+          }
+        });
+
+        $('#results').empty();
+        links.forEach(link => {
+          $('#results').append(`<li><a href="${link}" target="_blank">${link}</a></li>`);
+        });
+      });
+    });
+  </script>
+</body>
+</html>

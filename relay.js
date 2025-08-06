@@ -13,6 +13,9 @@
   const funcName = params.get("foo");
   const input = params.get("input") || "default";
 
+  console.log("relay.js loaded");
+  console.log("Parsed parameters:", { funcName, input });
+
   // Call matching function
   let result;
   if (funcName && functions[funcName]) {
@@ -20,6 +23,8 @@
   } else {
     result = `Function "${funcName}" not found.`;
   }
+
+  console.log("relay.js result:", result);
 
   // Expose result globally
   window.relayResult = result;

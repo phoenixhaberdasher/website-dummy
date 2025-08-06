@@ -1,22 +1,17 @@
 (function() {
   const functions = {
     bar: input => `Bar processed: ${input}`,
-    baz: input => `Baz transformed: ${input.toUpperCase()}`
+    baz: input => `Baz transformed: ${input.toUpperCase()}`,
+    qux: input => `Qux reversed: ${input.split('').reverse().join('')}`
   };
 
-  window.relayFunction = function(funcName, input = "default") {
-    let result;
-    if (funcName && functions[funcName]) {
-      result = functions[funcName](input);
-    } else {
-      result = `Function "${funcName}" not found.`;
-    }
+  // Create global relay object
+  window.relay = {};
 
-    const event = new CustomEvent("relayComplete", { detail: result });
-    window.dispatchEvent(event);
+  // Populate relay with named functions
+  for (const [name, fn] of Object.entries(functions)) {
+    window.relay[name] = fn;
+  }
 
-    return result;
-  };
-
-  console.log("relay.js loaded");
+  console.log("relay.js loaded with functions:", Object.keys(window.relay));
 })();

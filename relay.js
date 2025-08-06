@@ -1,26 +1,20 @@
 (function() {
   // Function registry
   const functions = {
-    bar: function(input) {
-      return `Bar processed: ${input}`;
-    },
-    baz: function(input) {
-      return `Baz transformed: ${input.toUpperCase()}`;
-    },
-    qux: function(input) {
-      return `Qux reversed: ${input.split('').reverse().join('')}`;
-    }
+    bar: input => `Bar processed: ${input}`,
+    baz: input => `Baz transformed: ${input.toUpperCase()}`,
+    qux: input => `Qux reversed: ${input.split('').reverse().join('')}`
   };
 
   // Parse hash or query
   const raw = location.hash || location.search;
   const params = new URLSearchParams(raw.replace(/^#/, '').replace(/^\?/, ''));
 
-  const funcName = params.get("foo"); // e.g., "bar"
+  const funcName = params.get("foo");
   const input = params.get("input") || "default";
 
   // Call matching function
-  let result = null;
+  let result;
   if (funcName && functions[funcName]) {
     result = functions[funcName](input);
   } else {
@@ -30,7 +24,15 @@
   // Expose result globally
   window.relayResult = result;
 
-  // Optional: dispatch event
-  const event = new CustomEvent("relayComplete", { detail: result });
-  window.dispatchEvent(event);
+  // Dispatch event after DOM is ready
+  if (document.readyState === "complete" || document.readyState === "interactive") {
+    dispatchRelayEvent(result);
+  } else {
+    document.addEventListener("DOMContentLoaded", () => dispatchRelayEvent(result));
+  }
+
+  function dispatchRelayEvent(detail) {
+    const event = new CustomEvent("relayComplete", { detail });
+    window.dispatchEvent(event);
+  }
 })();

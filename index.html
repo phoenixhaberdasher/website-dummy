@@ -29,7 +29,7 @@
         },
         data: JSON.stringify({ name: "Peter" }),
         success: function(data) {
-          console.log("Function response:", data);
+          console.log("Function response data:", data);
           const jsonString = JSON.stringify(data);
           $("#json-output").html(`{${jsonString.slice(1, -1)}}`);
         },

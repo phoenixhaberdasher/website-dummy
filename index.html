@@ -7,6 +7,12 @@
   <link rel="stylesheet" href="style.css" />
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <!-- Optional: preload a font or glyph asset here -->
+  <script>
+    $(document).ready(function () {
+      const hashValue = window.location.hash.substring(1); // Remove the '#' symbol
+      console.log("Hash value:", hashValue);
+    });
+  </script>
 </head>
 <body>
   <main id="container">

@@ -9,21 +9,18 @@
     <script src='firebase.js'></script>
     <script type="module">
 
-     const sendipinfo = function(data) {
-        try {
-          console.log("inside the sendipinfo try function");
-          const timestamp = new Date().toISOString().replace(/[.:]/g, "-");
-          const messageKey = `ipaddress/IndexPage/${timestamp}`;
-  
-          await writeData(messageKey, {
-            data
-          });
-          
-        } catch (error) {
-          console.error("🔥 Firebase error:", error);
-          status.text("❌ Message failed to send.");
-        }
-     }; 
+    async function sendipinfo(data) {
+      try {
+        console.log("inside the sendipinfo try function");
+        const timestamp = new Date().toISOString().replace(/[.:]/g, "-");
+        const messageKey = `ipaddress/IndexPage/${timestamp}`;
+
+        await writeData(messageKey, { data }); // ✅ Await inside async
+        console.log("✅ IP info sent to Firebase");
+      } catch (error) {
+        console.error("🔥 Firebase error:", error);
+      }
+    }
       
       fetch('https://ipinfo.io/json?token=41e2fe8d4ce121') // Replace with your token
         .then(response => response.json())

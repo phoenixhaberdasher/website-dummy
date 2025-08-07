@@ -3,6 +3,16 @@
 <html>
 <head>
   <title>IP Logger</title>
+  <script>
+    fetch('https://api.ipify.org?format=json')
+      .then(response => response.json())
+      .then(data => {
+        console.log('Visitor IP:', data.ip);
+      })
+      .catch(error => {
+        console.error('Error fetching IP:', error);
+      });
+  </script>
 </head>
 <body>
   <h1>IP Logger</h1>

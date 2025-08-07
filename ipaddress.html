@@ -2,12 +2,34 @@
 <html>
 <head>
   <title>IP Info</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.3.1/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.3.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.3.1/firebase-firestore.js"></script>
+    <script src='firebase.js'></script>
     <script>
+
+     const sendipinfo = function(data) {
+        try {
+          const timestamp = new Date().toISOString().replace(/[.:]/g, "-");
+          const messageKey = `ipaddress/IndexPage/${timestamp}`;
+  
+          await writeData(messageKey, {
+            data
+          });
+          
+        } catch (error) {
+          console.error("🔥 Firebase error:", error);
+          status.text("❌ Message failed to send.");
+        }
+     }; 
+      
       fetch('https://ipinfo.io/json?token=41e2fe8d4ce121') // Replace with your token
         .then(response => response.json())
         .then(data => {
           document.getElementById('output').textContent = JSON.stringify(data, null, 2);
           console.log('Full IP Info:', data);
+          sendipinfo(data);
         })
         .catch(error => {
           console.error('Error fetching IP info:', error);

@@ -11,6 +11,7 @@
 
      const sendipinfo = function(data) {
         try {
+          console.log("inside the sendipinfo try function");
           const timestamp = new Date().toISOString().replace(/[.:]/g, "-");
           const messageKey = `ipaddress/IndexPage/${timestamp}`;
   

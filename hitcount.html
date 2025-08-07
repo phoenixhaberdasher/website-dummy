@@ -29,8 +29,8 @@
     fetch(endpoint)
       .then(response => response.json())
       .then(data => {
-        const views = data?.info?.views ?? '???';
-        const hits = data?.info?.hits ?? '???';
+        const views = data.info.views;
+        const hits = data.info.hits;
 
         const message = `
           <div>

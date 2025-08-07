@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Hitcount Relay</title>
+  <style>
+    body {
+      margin: 0;
+      background: black;
+      color: rgb(0,255,0);
+      font-family: monospace;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+    #hitcount {
+      border: 2px solid white;
+      padding: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div id="hitcount">Fetching enlightenment...</div>
+
+  <script>
+    const endpoint = "https://weirdscifi.ratiosemper.com/neocities.php?sitename=roundabouthoolahoop";
+
+    fetch(endpoint)
+      .then(response => response.json())
+      .then(data => {
+        const views = data?.info?.views ?? '???';
+        const hits = data?.info?.hits ?? '???';
+
+        const message = `
+          <div>
+            NUMBER OF VISITORS THAT HAVE BEEN ENLIGHTENED: ${views}<br>
+            TOTAL COSMIC INTERACTIONS: ${hits}
+          </div>
+        `;
+
+        document.getElementById("hitcount").innerHTML = message;
+
+        // Relay to parent window
+        window.parent.postMessage(JSON.stringify(data), '*');
+      })
+      .catch(error => {
+        document.getElementById("hitcount").textContent = "Failed to fetch hitcount.";
+        window.parent.postMessage(JSON.stringify({ error: error.message }), '*');
+      });
+  </script>
+</body>
+</html>
